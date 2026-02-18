@@ -34,23 +34,23 @@ Cosa include l'ambiente
     Stazioni di energia: provvede ad un +1.0 di reward quando visitato (nonostante questa scelta possa portare il drone lontano dalla cella di goal).
 
 ### Visualizzazione ambiente
-
-[['S' 'O' 'O' 'F' 'F' 'F' 'F' 'O' 'O' 'O']
- ['O' 'F' 'C' 'C' 'C' 'O' 'F' 'E' 'F' 'O']
- ['O' 'O' 'F' 'F' 'F' 'O' 'F' 'F' 'F' 'C']
- ['F' 'C' 'F' 'F' 'E' 'C' 'F' 'O' 'F' 'C']
- ['F' 'C' 'F' 'F' 'F' 'C' 'F' 'O' 'F' 'C']
- ['F' 'E' 'F' 'O' 'O' 'O' 'F' 'E' 'F' 'C']
- ['O' 'O' 'O' 'O' 'O' 'O' 'F' 'F' 'F' 'C']
- ['O' 'F' 'F' 'F' 'O' 'O' 'O' 'F' 'F' 'C']
- ['O' 'O' 'O' 'O' 'F' 'F' 'F' 'F' 'F' 'C']
- ['F' 'F' 'F' 'O' 'O' 'O' 'O' 'G' 'O' 'F']]
-
+    
+    [['S' 'O' 'O' 'F' 'F' 'F' 'F' 'O' 'O' 'O']
+     ['O' 'F' 'C' 'C' 'C' 'O' 'F' 'E' 'F' 'O']
+     ['O' 'O' 'F' 'F' 'F' 'O' 'F' 'F' 'F' 'C']
+     ['F' 'C' 'F' 'F' 'E' 'C' 'F' 'O' 'F' 'C']
+     ['F' 'C' 'F' 'F' 'F' 'C' 'F' 'O' 'F' 'C']
+     ['F' 'E' 'F' 'O' 'O' 'O' 'F' 'E' 'F' 'C']
+     ['O' 'O' 'O' 'O' 'O' 'O' 'F' 'F' 'F' 'C']
+     ['O' 'F' 'F' 'F' 'O' 'O' 'O' 'F' 'F' 'C']
+     ['O' 'O' 'O' 'O' 'F' 'F' 'F' 'F' 'F' 'C']
+     ['F' 'F' 'F' 'O' 'O' 'O' 'O' 'G' 'O' 'F']]
+    
 ### Codifica delle azioni
-
-Actions encoding:  {0: 'L', 1: 'R', 2: 'U', 3: 'D'}
-Cell type of start state:  S
-Cell type of goal state:  G
-Cell type of cell (0, 3):  F
-Cell type of cell (1, 2):  C
-Cell type of cell (1, 7):  E
+    
+    Actions encoding:  {0: 'L', 1: 'R', 2: 'U', 3: 'D'}
+    Cell type of start state:  S
+    Cell type of goal state:  G
+    Cell type of cell (0, 3):  F
+    Cell type of cell (1, 2):  C
+    Cell type of cell (1, 7):  E
