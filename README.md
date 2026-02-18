@@ -1,18 +1,18 @@
 # MDP-value-iteration
 
-### Testo
+## Testo
 
 Un drone avanzato è stato posizionato sul campo per prendere dati critici sulla biodiversità marina in una regione costiera. Il Drone parte dal punto S, posizionato vicino alla costa, e deve navigare fino al punto G, un punto designato ricco di corali marini e vita di mare. Lunga la strada, il drone deve manovrare in modo attento attraverso degli ambienti subacquei dinamici, evitando pericoli e ottimizzando l'uso di energia.
 Cosa include l'ambiente
 
-L'ambiente è così composto:
+### L'ambiente è così composto:
 
     (O) Open Water: movimento normale, non sono presenti sfide
     (C) Currents: aree dove il movimento del drone è influenzato da correnti marine che possono portarlo fuori rotta
     (F) Seaweed Forest: vegetazione densa che rallenta il drone che deve usare più energia per muoversi
     (E) Energy Stations: punti specifici dove il drone può ricaricare la batteria, riducendo il costo totale della navigazione
 
-Dettaglia dell'ambiente
+### Dettaglia dell'ambiente
 
     Rappresentazione della griglia: l'ambiente è rappresentato da una matrice 10 x 10
 
@@ -33,7 +33,7 @@ Dettaglia dell'ambiente
 
     Stazioni di energia: provvede ad un +1.0 di reward quando visitato (nonostante questa scelta possa portare il drone lontano dalla cella di goal).
 
-Visualizzazione ambiente
+### Visualizzazione ambiente
 
 [['S' 'O' 'O' 'F' 'F' 'F' 'F' 'O' 'O' 'O']
  ['O' 'F' 'C' 'C' 'C' 'O' 'F' 'E' 'F' 'O']
@@ -46,7 +46,7 @@ Visualizzazione ambiente
  ['O' 'O' 'O' 'O' 'F' 'F' 'F' 'F' 'F' 'C']
  ['F' 'F' 'F' 'O' 'O' 'O' 'O' 'G' 'O' 'F']]
 
-Codifica delle azioni
+### Codifica delle azioni
 
 Actions encoding:  {0: 'L', 1: 'R', 2: 'U', 3: 'D'}
 Cell type of start state:  S
