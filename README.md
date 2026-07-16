@@ -100,7 +100,7 @@ This allows the drone to navigate efficiently while balancing risk, energy consu
 ---
 
 ## Collaborators
- - (Alesssandro De Carli)[https://github.com/alepdl5]
+ - (Alesssandro De Carli)[https://github.com/aledpl5]
 
 
 
