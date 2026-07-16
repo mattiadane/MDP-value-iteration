@@ -1,56 +1,106 @@
-# MDP-value-iteration
+# MDP Value Iteration – Marine Drone Navigation
 
-## Testo
+## Description
 
-Un drone avanzato è stato posizionato sul campo per prendere dati critici sulla biodiversità marina in una regione costiera. Il Drone parte dal punto S, posizionato vicino alla costa, e deve navigare fino al punto G, un punto designato ricco di corali marini e vita di mare. Lunga la strada, il drone deve manovrare in modo attento attraverso degli ambienti subacquei dinamici, evitando pericoli e ottimizzando l'uso di energia.
-Cosa include l'ambiente
+An advanced marine drone has been deployed to collect critical biodiversity data in a coastal region.  
+The drone starts from point **S**, located near the shore, and must navigate to point **G**, a designated area rich in coral and marine life.  
+Along the way, the drone must carefully maneuver through dynamic underwater environments, avoid hazards, and optimize energy usage.
 
-### L'ambiente è così composto:
+This project models the environment as a **Markov Decision Process (MDP)** and applies **Value Iteration** to compute the optimal navigation policy.
 
-    (O) Open Water: movimento normale, non sono presenti sfide
-    (C) Currents: aree dove il movimento del drone è influenzato da correnti marine che possono portarlo fuori rotta
-    (F) Seaweed Forest: vegetazione densa che rallenta il drone che deve usare più energia per muoversi
-    (E) Energy Stations: punti specifici dove il drone può ricaricare la batteria, riducendo il costo totale della navigazione
+---
 
-### Dettaglia dell'ambiente
+## Environment Description
 
-    Rappresentazione della griglia: l'ambiente è rappresentato da una matrice 10 x 10
+The environment is represented as a **10 × 10 grid**, where each cell corresponds to a specific underwater condition:
 
-    S - Start State: Il punto di partenza del drone (0, 0)
+### Cell Types
 
-    G - Goal State: Il punto di arrivo del drone (9, 7)
+- **(O) Open Water** – Normal movement, no particular challenges  
+- **(C) Currents** – Marine currents may push the drone off its intended path  
+- **(F) Seaweed Forest** – Dense vegetation that slows the drone and increases energy cost  
+- **(E) Energy Stations** – Recharge points that provide a positive reward  
+- **S** – Start state at coordinates **(0, 0)**  
+- **G** – Goal state at coordinates **(9, 7)**  
 
-    Costo del momvimento: ogni movimento ha come costo base di -0.04
+---
 
-    Pericoli:
+## Movement Cost and Rewards
 
-        Correnti forti: si entra in una zona con questi risultati in un ambiente stocastico:
-            80% di possibilità di rimanere sulla stessa rotta
-            10% di possibilità di essere spinto su una cella a sinistra perpendicolare al movimento desiderato all'inizio
-            10% di possibilità di essere sprinto su una cella a destra perpendicolare al movimento desiderato all'inizio
+- **Base movement cost:** `-0.04`  
+- **Seaweed Forest penalty:** additional `-0.02` (total `-0.24`)  
+- **Energy Station reward:** `+1.0` when visited  
+- **Goal state:** terminal state with positive reward (defined in code)
 
-        Seaweed Forest: quando si entra in queste zone si deve aggiungere un -0.02 in più di penalty rispetto alla normale penalty del movimento (ex: -0.24)
+---
 
-    Stazioni di energia: provvede ad un +1.0 di reward quando visitato (nonostante questa scelta possa portare il drone lontano dalla cella di goal).
+## Stochastic Transitions (Currents)
 
-### Visualizzazione ambiente
-    
-    [['S' 'O' 'O' 'F' 'F' 'F' 'F' 'O' 'O' 'O']
-     ['O' 'F' 'C' 'C' 'C' 'O' 'F' 'E' 'F' 'O']
-     ['O' 'O' 'F' 'F' 'F' 'O' 'F' 'F' 'F' 'C']
-     ['F' 'C' 'F' 'F' 'E' 'C' 'F' 'O' 'F' 'C']
-     ['F' 'C' 'F' 'F' 'F' 'C' 'F' 'O' 'F' 'C']
-     ['F' 'E' 'F' 'O' 'O' 'O' 'F' 'E' 'F' 'C']
-     ['O' 'O' 'O' 'O' 'O' 'O' 'F' 'F' 'F' 'C']
-     ['O' 'F' 'F' 'F' 'O' 'O' 'O' 'F' 'F' 'C']
-     ['O' 'O' 'O' 'O' 'F' 'F' 'F' 'F' 'F' 'C']
-     ['F' 'F' 'F' 'O' 'O' 'O' 'O' 'G' 'O' 'F']]
-    
-### Codifica delle azioni
-    
-    Actions encoding:  {0: 'L', 1: 'R', 2: 'U', 3: 'D'}
-    Cell type of start state:  S
-    Cell type of goal state:  G
-    Cell type of cell (0, 3):  F
-    Cell type of cell (1, 2):  C
-    Cell type of cell (1, 7):  E
+When the drone moves into a **Current (C)** cell, the movement becomes stochastic:
+
+- **80%** chance to continue in the intended direction  
+- **10%** chance to be pushed **left** (perpendicular to intended direction)  
+- **10%** chance to be pushed **right** (perpendicular to intended direction)
+
+This models the unpredictable nature of underwater currents.
+
+---
+
+## Environment Visualization
+
+```
+[['S' 'O' 'O' 'F' 'F' 'F' 'F' 'O' 'O' 'O']
+ ['O' 'F' 'C' 'C' 'C' 'O' 'F' 'E' 'F' 'O']
+ ['O' 'O' 'F' 'F' 'F' 'O' 'F' 'F' 'F' 'C']
+ ['F' 'C' 'F' 'F' 'E' 'C' 'F' 'O' 'F' 'C']
+ ['F' 'C' 'F' 'F' 'F' 'C' 'F' 'O' 'F' 'C']
+ ['F' 'E' 'F' 'O' 'O' 'O' 'F' 'E' 'F' 'C']
+ ['O' 'O' 'O' 'O' 'O' 'O' 'F' 'F' 'F' 'C']
+ ['O' 'F' 'F' 'F' 'O' 'O' 'O' 'F' 'F' 'C']
+ ['O' 'O' 'O' 'O' 'F' 'F' 'F' 'F' 'F' 'C']
+ ['F' 'F' 'F' 'O' 'O' 'O' 'O' 'G' 'O' 'F']]
+```
+
+---
+
+## Actions Encoding
+
+```
+{0: 'L', 1: 'R', 2: 'U', 3: 'D'}
+```
+
+- **L** – Move Left  
+- **R** – Move Right  
+- **U** – Move Up  
+- **D** – Move Down  
+
+---
+
+## Example Cell Types
+
+- Start state: **S**  
+- Goal state: **G**  
+- Cell (0, 3): **F** (Seaweed Forest)  
+- Cell (1, 2): **C** (Currents)  
+- Cell (1, 7): **E** (Energy Station)
+
+---
+
+## Purpose of the Project
+
+The goal is to:
+
+- Model the underwater environment as an MDP  
+- Define transition probabilities and rewards  
+- Apply **Value Iteration** to compute the optimal policy  
+- Visualize the resulting value function and optimal actions  
+
+This allows the drone to navigate efficiently while balancing risk, energy consumption, and environmental constraints.
+
+---
+
+## Collaborators
+ - (Alesssandro De Carli)[https://github.com/alepdl5]
+
+
+
